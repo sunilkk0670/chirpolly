@@ -35,12 +35,63 @@ GEMINI_API_KEY=your_gemini_api_key
 
 ## Firestore Security Rules
 
-```
+Update your Firestore security rules in the Firebase Console to include all collections:
+
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // User profiles - only owner can read/write
     match /users/{uid} {
       allow read, write: if request.auth.uid == uid;
+    }
+    
+    // Social feed posts - anyone can read, authenticated users can write their own
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+    
+    // Comments - anyone can read, authenticated users can write their own
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+    
+    // Likes - anyone can read, authenticated users can manage their own
+    match /likes/{likeId} {
+      allow read: if true;
+      allow create, delete: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Tutor profiles - anyone can read verified tutors, only owner can write
+    match /tutors/{tutorId} {
+      allow read: if resource.data.isVerified == true;
+      allow write: if request.auth.uid == resource.data.userId;
+    }
+    
+    // Tutor applications - only owner can read/write their application
+    match /tutor_applications/{applicationId} {
+      allow read, write: if request.auth.uid == resource.data.userId;
+      allow create: if request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Bookings - student and tutor can read/write their bookings
+    match /bookings/{bookingId} {
+      allow read: if request.auth.uid == resource.data.studentId || 
+                     request.auth.uid == resource.data.tutorId;
+      allow create: if request.auth.uid == request.resource.data.studentId;
+      allow update: if request.auth.uid == resource.data.studentId || 
+                       request.auth.uid == resource.data.tutorId;
+    }
+    
+    // Reviews - anyone can read, only students who completed sessions can write
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.auth.uid == request.resource.data.studentId;
+      allow update, delete: if request.auth.uid == resource.data.studentId;
     }
   }
 }

@@ -528,6 +528,427 @@ export const LESSONS: Lesson[] = [
             { question: "What does 'Kiitos' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
             { question: "How do you say 'Hello' in Finnish?", options: ["Hyvää yötä", "Hei", "Kiitos"], answer: "Hei" }
         ]
+    },
+    // ============ INTERMEDIATE LESSONS (Level 02) ============
+    {
+        lesson_id: "en_02",
+        language: "English",
+        title: "Shopping & Asking Questions",
+        description: "Learn useful phrases for shopping and asking basic questions.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'en',
+        category: 'Lesson',
+        content: [
+            { word: "How much is this?", transliteration: "How much is this?", meaning: "Asking price", example: "Excuse me, how much is this shirt?", audio: "audio/howmuch_en.mp3" },
+            { word: "Where is...?", transliteration: "Where is...?", meaning: "Asking location", example: "Where is the nearest train station?", audio: "audio/whereis_en.mp3" },
+            { word: "I would like...", transliteration: "I would like...", meaning: "Making request", example: "I would like a cup of coffee, please.", audio: "audio/iwould_en.mp3" },
+            { word: "Can you help me?", transliteration: "Can you help me?", meaning: "Asking for help", example: "Excuse me, can you help me find this address?", audio: "audio/canyou_en.mp3" }
+        ],
+        quiz: [
+            { question: "How do you ask the price in English?", options: ["Where is...?", "How much is this?", "Can you help me?"], answer: "How much is this?" },
+            { question: "What phrase is used to make a polite request?", options: ["I would like...", "Where is...?", "How much is this?"], answer: "I would like..." }
+        ]
+    },
+    {
+        lesson_id: "es_02",
+        language: "Spanish",
+        title: "Compras y Preguntas",
+        description: "Aprende frases útiles para hacer compras y preguntas básicas.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'es',
+        category: 'Lesson',
+        content: [
+            { word: "¿Cuánto cuesta?", transliteration: "Cuánto cuesta", meaning: "How much is it?", example: "Disculpe, ¿cuánto cuesta esta camisa?", audio: "audio/cuanto_es.mp3" },
+            { word: "¿Dónde está...?", transliteration: "Dónde está", meaning: "Where is...?", example: "¿Dónde está la estación de tren más cercana?", audio: "audio/donde_es.mp3" },
+            { word: "Quisiera...", transliteration: "Quisiera", meaning: "I would like...", example: "Quisiera una taza de café, por favor.", audio: "audio/quisiera_es.mp3" },
+            { word: "¿Puede ayudarme?", transliteration: "Puede ayudarme", meaning: "Can you help me?", example: "Disculpe, ¿puede ayudarme a encontrar esta dirección?", audio: "audio/puede_es.mp3" }
+        ],
+        quiz: [
+            { question: "¿Cómo preguntas el precio en español?", options: ["¿Dónde está...?", "¿Cuánto cuesta?", "¿Puede ayudarme?"], answer: "¿Cuánto cuesta?" },
+            { question: "¿Qué frase usas para hacer una petición educada?", options: ["Quisiera...", "¿Dónde está...?", "¿Cuánto cuesta?"], answer: "Quisiera..." }
+        ],
+        cultureCapsule: {
+            title: "Mercados y Regateo",
+            icon: "🏪",
+            content: "In many Spanish-speaking countries, local markets (*mercados*) are vibrant places where bargaining (*regateo*) is common and even expected. Start by offering 60-70% of the asking price and negotiate respectfully. It's part of the cultural experience!"
+        }
+    },
+    {
+        lesson_id: "fr_02",
+        language: "French",
+        title: "Faire des Courses",
+        description: "Apprenez des phrases utiles pour faire vos courses et poser des questions.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'fr',
+        category: 'Lesson',
+        content: [
+            { word: "Combien ça coûte?", transliteration: "Combien ça coûte", meaning: "How much is it?", example: "Excusez-moi, combien ça coûte cette chemise?", audio: "audio/combien_fr.mp3" },
+            { word: "Où est...?", transliteration: "Où est", meaning: "Where is...?", example: "Où est la gare la plus proche?", audio: "audio/ou_fr.mp3" },
+            { word: "Je voudrais...", transliteration: "Je voudrais", meaning: "I would like...", example: "Je voudrais une tasse de café, s'il vous plaît.", audio: "audio/voudrais_fr.mp3" },
+            { word: "Pouvez-vous m'aider?", transliteration: "Pouvez-vous m'aider", meaning: "Can you help me?", example: "Excusez-moi, pouvez-vous m'aider à trouver cette adresse?", audio: "audio/pouvez_fr.mp3" }
+        ],
+        quiz: [
+            { question: "Comment demandez-vous le prix en français?", options: ["Où est...?", "Combien ça coûte?", "Pouvez-vous m'aider?"], answer: "Combien ça coûte?" },
+            { question: "Quelle phrase utilisez-vous pour faire une demande polie?", options: ["Je voudrais...", "Où est...?", "Combien ça coûte?"], answer: "Je voudrais..." }
+        ],
+        cultureCapsule: {
+            title: "Les Marchés Français",
+            icon: "🥖",
+            content: "French markets (*les marchés*) are a cornerstone of daily life. Fresh produce, cheese, and bread are purchased from local vendors. Always greet the vendor with 'Bonjour' before asking for items—it's considered polite and essential!"
+        }
+    },
+    {
+        lesson_id: "de_02",
+        language: "German",
+        title: "Einkaufen und Fragen",
+        description: "Lernen Sie nützliche Sätze zum Einkaufen und für grundlegende Fragen.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'de',
+        category: 'Lesson',
+        content: [
+            { word: "Wie viel kostet das?", transliteration: "Wie viel kostet das", meaning: "How much is this?", example: "Entschuldigung, wie viel kostet dieses Hemd?", audio: "audio/wieviel_de.mp3" },
+            { word: "Wo ist...?", transliteration: "Wo ist", meaning: "Where is...?", example: "Wo ist der nächste Bahnhof?", audio: "audio/wo_de.mp3" },
+            { word: "Ich hätte gern...", transliteration: "Ich hätte gern", meaning: "I would like...", example: "Ich hätte gern eine Tasse Kaffee, bitte.", audio: "audio/haette_de.mp3" },
+            { word: "Können Sie mir helfen?", transliteration: "Können Sie mir helfen", meaning: "Can you help me?", example: "Entschuldigung, können Sie mir helfen, diese Adresse zu finden?", audio: "audio/koennen_de.mp3" }
+        ],
+        quiz: [
+            { question: "Wie fragt man nach dem Preis auf Deutsch?", options: ["Wo ist...?", "Wie viel kostet das?", "Können Sie mir helfen?"], answer: "Wie viel kostet das?" },
+            { question: "Welche Phrase benutzt man für eine höfliche Bitte?", options: ["Ich hätte gern...", "Wo ist...?", "Wie viel kostet das?"], answer: "Ich hätte gern..." }
+        ]
+    },
+    {
+        lesson_id: "ja_02",
+        language: "Japanese",
+        title: "買い物と質問",
+        description: "買い物や基本的な質問に役立つフレーズを学びましょう。",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'ja',
+        category: 'Lesson',
+        content: [
+            { word: "これはいくらですか？", transliteration: "Kore wa ikura desu ka?", meaning: "How much is this?", example: "すみません、このシャツはいくらですか？", audio: "audio/ikura_ja.mp3" },
+            { word: "...はどこですか？", transliteration: "...wa doko desu ka?", meaning: "Where is...?", example: "一番近い駅はどこですか？", audio: "audio/doko_ja.mp3" },
+            { word: "...をください", transliteration: "...o kudasai", meaning: "Please give me...", example: "コーヒーを一つください。", audio: "audio/kudasai_ja.mp3" },
+            { word: "助けていただけますか？", transliteration: "Tasukete itadakemasu ka?", meaning: "Can you help me?", example: "すみません、この住所を探すのを助けていただけますか？", audio: "audio/tasukete_ja.mp3" }
+        ],
+        quiz: [
+            { question: "日本語で値段を聞く時、何と言いますか？", options: ["...はどこですか？", "これはいくらですか？", "助けていただけますか？"], answer: "これはいくらですか？" },
+            { question: "丁寧に頼む時、どのフレーズを使いますか？", options: ["...をください", "...はどこですか？", "これはいくらですか？"], answer: "...をください" }
+        ],
+        cultureCapsule: {
+            title: "コンビニ文化",
+            icon: "🏪",
+            content: "Convenience stores (*konbini*) like 7-Eleven, Lawson, and FamilyMart are everywhere in Japan and open 24/7. You can pay bills, buy concert tickets, get hot meals, and even mail packages—all with impeccable service!"
+        }
+    },
+    {
+        lesson_id: "hi_02",
+        language: "Hindi",
+        title: "खरीदारी और सवाल",
+        description: "खरीदारी और बुनियादी सवालों के लिए उपयोगी वाक्यांश सीखें।",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'hi',
+        category: 'Lesson',
+        content: [
+            { word: "यह कितने का है?", transliteration: "Yeh kitne ka hai?", meaning: "How much is this?", example: "माफ़ कीजिए, यह शर्ट कितने की है?", audio: "audio/kitne_hi.mp3" },
+            { word: "...कहाँ है?", transliteration: "...kahaan hai?", meaning: "Where is...?", example: "सबसे नज़दीकी रेलवे स्टेशन कहाँ है?", audio: "audio/kahaan_hi.mp3" },
+            { word: "मुझे...चाहिए", transliteration: "Mujhe...chaahiye", meaning: "I need/want...", example: "मुझे एक कप कॉफी चाहिए, कृपया।", audio: "audio/chaahiye_hi.mp3" },
+            { word: "क्या आप मेरी मदद कर सकते हैं?", transliteration: "Kya aap meri madad kar sakte hain?", meaning: "Can you help me?", example: "माफ़ कीजिए, क्या आप इस पते को खोजने में मेरी मदद कर सकते हैं?", audio: "audio/madad_hi.mp3" }
+        ],
+        quiz: [
+            { question: "हिंदी में कीमत पूछने के लिए आप क्या कहेंगे?", options: ["...कहाँ है?", "यह कितने का है?", "क्या आप मेरी मदद कर सकते हैं?"], answer: "यह कितने का है?" },
+            { question: "विनम्र अनुरोध के लिए कौन सा वाक्यांश उपयोग करते हैं?", options: ["मुझे...चाहिए", "...कहाँ है?", "यह कितने का है?"], answer: "मुझे...चाहिए" }
+        ]
+    },
+    {
+        lesson_id: "ta_02",
+        language: "Tamil",
+        title: "கடையில் வாங்குதல்",
+        description: "கடையில் வாங்குவதற்கும் அடிப்படை கேள்விகளுக்கும் பயனுள்ள வாக்கியங்களை கற்றுக்கொள்ளுங்கள்.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'ta',
+        category: 'Lesson',
+        content: [
+            { word: "இது எவ்வளவு?", transliteration: "Idhu evvalavu?", meaning: "How much is this?", example: "மன்னிக்கவும், இந்த சட்டை எவ்வளவு?", audio: "audio/evvalavu_ta.mp3" },
+            { word: "...எங்கே இருக்கிறது?", transliteration: "...enge irukkiraadhu?", meaning: "Where is...?", example: "மிக அருகில் உள்ள ரயில் நிலையம் எங்கே இருக்கிறது?", audio: "audio/enge_ta.mp3" },
+            { word: "எனக்கு...வேண்டும்", transliteration: "Enakku...vendum", meaning: "I need/want...", example: "எனக்கு ஒரு காபி வேண்டும், தயவுசெய்து।", audio: "audio/vendum_ta.mp3" },
+            { word: "நீங்கள் எனக்கு உதவ முடியுமா?", transliteration: "Neengal enakku udhava mudiyuma?", meaning: "Can you help me?", example: "மன்னிக்கவும், இந்த முகவரியைக் கண்டுபிடிக்க நீங்கள் எனக்கு உதவ முடியுமா?", audio: "audio/udhava_ta.mp3" }
+        ],
+        quiz: [
+            { question: "தமிழில் விலையைக் கேட்பதற்கு என்ன சொல்வீர்கள்?", options: ["...எங்கே இருக்கிறது?", "இது எவ்வளவு?", "நீங்கள் எனக்கு உதவ முடியுமா?"], answer: "இது எவ்வளவு?" },
+            { question: "மரியாதையான கோரிக்கைக்கு எந்த வாக்கியத்தைப் பயன்படுத்துவீர்கள்?", options: ["எனக்கு...வேண்டும்", "...எங்கே இருக்கிறது?", "இது எவ்வளவு?"], answer: "எனக்கு...வேண்டும்" }
+        ]
+    },
+    {
+        lesson_id: "kn_02",
+        language: "Kannada",
+        title: "ಶಾಪಿಂಗ್ ಮತ್ತು ಪ್ರಶ್ನೆಗಳು",
+        description: "ಶಾಪಿಂಗ್ ಮತ್ತು ಮೂಲಭೂತ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉಪಯುಕ್ತ ನುಡಿಗಟ್ಟುಗಳನ್ನು ಕಲಿಯಿರಿ.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'kn',
+        category: 'Lesson',
+        content: [
+            { word: "ಇದು ಎಷ್ಟು?", transliteration: "Idhu eshtu?", meaning: "How much is this?", example: "ಕ್ಷಮಿಸಿ, ಈ ಶರ್ಟ್ ಎಷ್ಟು?", audio: "audio/eshtu_kn.mp3" },
+            { word: "...ಎಲ್ಲಿದೆ?", transliteration: "...ellide?", meaning: "Where is...?", example: "ಹತ್ತಿರದ ರೈಲು ನಿಲ್ದಾಣ ಎಲ್ಲಿದೆ?", audio: "audio/ellide_kn.mp3" },
+            { word: "ನನಗೆ...ಬೇಕು", transliteration: "Nanage...beku", meaning: "I need/want...", example: "ನನಗೆ ಒಂದು ಕಪ್ ಕಾಫಿ ಬೇಕು, ದಯವಿಟ್ಟು.", audio: "audio/beku_kn.mp3" },
+            { word: "ನೀವು ನನಗೆ ಸಹಾಯ ಮಾಡಬಹುದೇ?", transliteration: "Neevu nanage sahaaya maadabahude?", meaning: "Can you help me?", example: "ಕ್ಷಮಿಸಿ, ಈ ವಿಳಾಸ ಹುಡುಕಲು ನೀವು ನನಗೆ ಸಹಾಯ ಮಾಡಬಹುದೇ?", audio: "audio/sahaaya_kn.mp3" }
+        ],
+        quiz: [
+            { question: "ಕನ್ನಡದಲ್ಲಿ ಬೆಲೆಯನ್ನು ಕೇಳಲು ನೀವು ಏನು ಹೇಳುತ್ತೀರಿ?", options: ["...ಎಲ್ಲಿದೆ?", "ಇದು ಎಷ್ಟು?", "ನೀವು ನನಗೆ ಸಹಾಯ ಮಾಡಬಹುದೇ?"], answer: "ಇದು ಎಷ್ಟು?" },
+            { question: "ವಿನಯಶೀಲ ವಿನಂತಿಗಾಗಿ ಯಾವ ನುಡಿಗಟ್ಟನ್ನು ಬಳಸುತ್ತೀರಿ?", options: ["ನನಗೆ...ಬೇಕು", "...ಎಲ್ಲಿದೆ?", "ಇದು ಎಷ್ಟು?"], answer: "ನನಗೆ...ಬೇಕು" }
+        ]
+    },
+    {
+        lesson_id: "te_02",
+        language: "Telugu",
+        title: "షాపింగ్ మరియు ప్రశ్నలు",
+        description: "షాపింగ్ మరియు ప్రాథమిక ప్రశ్నలకు ఉపయోగకరమైన వాక్యాలు నేర్చుకోండి.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'te',
+        category: 'Lesson',
+        content: [
+            { word: "ఇది ఎంత?", transliteration: "Idhi entha?", meaning: "How much is this?", example: "క్షమించండి, ఈ షర్ట్ ఎంత?", audio: "audio/entha_te.mp3" },
+            { word: "...ఎక్కడ ఉంది?", transliteration: "...ekkada undi?", meaning: "Where is...?", example: "దగ్గరి రైలు స్టేషన్ ఎక్కడ ఉంది?", audio: "audio/ekkada_te.mp3" },
+            { word: "నాకు...కావాలి", transliteration: "Naaku...kaavaali", meaning: "I need/want...", example: "నాకు ఒక కప్పు కాఫీ కావాలి, దయచేసి.", audio: "audio/kaavaali_te.mp3" },
+            { word: "మీరు నాకు సహాయం చేయగలరా?", transliteration: "Meeru naaku sahaayam cheyagalara?", meaning: "Can you help me?", example: "క్షమించండి, ఈ చిరునామా కనుగొనడంలో మీరు నాకు సహాయం చేయగలరా?", audio: "audio/sahaayam_te.mp3" }
+        ],
+        quiz: [
+            { question: "తెలుగులో ధరను అడగడానికి మీరు ఏమి చెబుతారు?", options: ["...ఎక్కడ ఉంది?", "ఇది ఎంత?", "మీరు నాకు సహాయం చేయగలరా?"], answer: "ఇది ఎంత?" },
+            { question: "మర్యాదపూర్వక అభ్యర్థన కోసం ఏ వాక్యాన్ని ఉపయోగిస్తారు?", options: ["నాకు...కావాలి", "...ఎక్కడ ఉంది?", "ఇది ఎంత?"], answer: "నాకు...కావాలి" }
+        ]
+    },
+    {
+        lesson_id: "ml_02",
+        language: "Malayalam",
+        title: "ഷോപ്പിംഗും ചോദ്യങ്ങളും",
+        description: "ഷോപ്പിംഗിനും അടിസ്ഥാന ചോദ്യങ്ങൾക്കും ഉപയോഗപ്രദമായ വാക്യങ്ങൾ പഠിക്കുക.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'ml',
+        category: 'Lesson',
+        content: [
+            { word: "ഇതിന്റെ വില എത്രയാണ്?", transliteration: "Ithinte vila ethrayaanu?", meaning: "How much is this?", example: "ക്ഷമിക്കണം, ഈ ഷർട്ടിന്റെ വില എത്രയാണ്?", audio: "audio/ethrayaanu_ml.mp3" },
+            { word: "...എവിടെയാണ്?", transliteration: "...evideyaanu?", meaning: "Where is...?", example: "ഏറ്റവും അടുത്തുള്ള റെയിൽവേ സ്റ്റേഷൻ എവിടെയാണ്?", audio: "audio/evideyaanu_ml.mp3" },
+            { word: "എനിക്ക്...വേണം", transliteration: "Enikku...venam", meaning: "I need/want...", example: "എനിക്ക് ഒരു കപ്പ് കോഫി വേണം, ദയവായി.", audio: "audio/venam_ml.mp3" },
+            { word: "നിങ്ങൾക്ക് എന്നെ സഹായിക്കാൻ കഴിയുമോ?", transliteration: "Ningalkku enne sahaayikkan kazhiyumo?", meaning: "Can you help me?", example: "ക്ഷമിക്കണം, ഈ വിലാസം കണ്ടെത്താൻ നിങ്ങൾക്ക് എന്നെ സഹായിക്കാൻ കഴിയുമോ?", audio: "audio/sahaayikkan_ml.mp3" }
+        ],
+        quiz: [
+            { question: "മലയാളത്തിൽ വില ചോദിക്കാൻ നിങ്ങൾ എന്താണ് പറയുക?", options: ["...എവിടെയാണ്?", "ഇതിന്റെ വില എത്രയാണ്?", "നിങ്ങൾക്ക് എന്നെ സഹായിക്കാൻ കഴിയുമോ?"], answer: "ഇതിന്റെ വില എത്രയാണ്?" },
+            { question: "മര്യാദയുള്ള അഭ്യർത്ഥനയ്ക്ക് ഏത് വാക്യമാണ് ഉപയോഗിക്കുന്നത്?", options: ["എനിക്ക്...വേണം", "...എവിടെയാണ്?", "ഇതിന്റെ വില എത്രയാണ്?"], answer: "എനിക്ക്...വേണം" }
+        ]
+    },
+    {
+        lesson_id: "mr_02",
+        language: "Marathi",
+        title: "खरेदी आणि प्रश्न",
+        description: "खरेदी आणि मूलभूत प्रश्नांसाठी उपयुक्त वाक्ये शिका.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'mr',
+        category: 'Lesson',
+        content: [
+            { word: "हे किती आहे?", transliteration: "He kiti aahe?", meaning: "How much is this?", example: "माफ करा, हा शर्ट किती आहे?", audio: "audio/kiti_mr.mp3" },
+            { word: "...कुठे आहे?", transliteration: "...kuthe aahe?", meaning: "Where is...?", example: "सर्वात जवळचे रेल्वे स्टेशन कुठे आहे?", audio: "audio/kuthe_mr.mp3" },
+            { word: "मला...हवे आहे", transliteration: "Mala...have aahe", meaning: "I need/want...", example: "मला एक कप कॉफी हवी आहे, कृपया.", audio: "audio/have_mr.mp3" },
+            { word: "तुम्ही मला मदत करू शकता का?", transliteration: "Tumhi mala madad karu shakta ka?", meaning: "Can you help me?", example: "माफ करा, हा पत्ता शोधण्यासाठी तुम्ही मला मदत करू शकता का?", audio: "audio/madad_mr.mp3" }
+        ],
+        quiz: [
+            { question: "मराठीमध्ये किंमत विचारण्यासाठी तुम्ही काय म्हणाल?", options: ["...कुठे आहे?", "हे किती आहे?", "तुम्ही मला मदत करू शकता का?"], answer: "हे किती आहे?" },
+            { question: "नम्र विनंतीसाठी कोणते वाक्य वापरता?", options: ["मला...हवे आहे", "...कुठे आहे?", "हे किती आहे?"], answer: "मला...हवे आहे" }
+        ]
+    },
+    {
+        lesson_id: "or_02",
+        language: "Odia",
+        title: "କିଣାକାଟି ଏବଂ ପ୍ରଶ୍ନ",
+        description: "କିଣାକାଟି ଏବଂ ମୌଳିକ ପ୍ରଶ୍ନ ପାଇଁ ଉପଯୋଗୀ ବାକ୍ୟାଂଶ ଶିଖନ୍ତୁ।",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'or',
+        category: 'Lesson',
+        content: [
+            { word: "ଏହା କେତେ?", transliteration: "Eha kete?", meaning: "How much is this?", example: "କ୍ଷମା କରନ୍ତୁ, ଏହି ସାର୍ଟ କେତେ?", audio: "audio/kete_or.mp3" },
+            { word: "...କେଉଁଠି ଅଛି?", transliteration: "...keunthi achhi?", meaning: "Where is...?", example: "ନିକଟତମ ରେଳ ଷ୍ଟେସନ କେଉଁଠି ଅଛି?", audio: "audio/keunthi_or.mp3" },
+            { word: "ମୋତେ...ଦରକାର", transliteration: "Mote...darakar", meaning: "I need/want...", example: "ମୋତେ ଏକ କପ୍ କଫି ଦରକାର, ଦୟାକରି।", audio: "audio/darakar_or.mp3" },
+            { word: "ଆପଣ ମୋତେ ସାହାଯ୍ୟ କରିପାରିବେ କି?", transliteration: "Aapana mote sahajya karipaaribe ki?", meaning: "Can you help me?", example: "କ୍ଷମା କରନ୍ତୁ, ଏହି ଠିକଣା ଖୋଜିବାରେ ଆପଣ ମୋତେ ସାହାଯ୍ୟ କରିପାରିବେ କି?", audio: "audio/sahajya_or.mp3" }
+        ],
+        quiz: [
+            { question: "ଓଡିଆରେ ମୂଲ୍ୟ ପଚାରିବାକୁ ଆପଣ କ'ଣ କହିବେ?", options: ["...କେଉଁଠି ଅଛି?", "ଏହା କେତେ?", "ଆପଣ ମୋତେ ସାହାଯ୍ୟ କରିପାରିବେ କି?"], answer: "ଏହା କେତେ?" },
+            { question: "ନମ୍ର ଅନୁରୋଧ ପାଇଁ କେଉଁ ବାକ୍ୟାଂଶ ବ୍ୟବହାର କରାଯାଏ?", options: ["ମୋତେ...ଦରକାର", "...କେଉଁଠି ଅଛି?", "ଏହା କେତେ?"], answer: "ମୋତେ...ଦରକାର" }
+        ]
+    },
+    {
+        lesson_id: "gu_02",
+        language: "Gujarati",
+        title: "ખરીદી અને પ્રશ્નો",
+        description: "ખરીદી અને મૂળભૂત પ્રશ્નો માટે ઉપયોગી વાક્યો શીખો.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'gu',
+        category: 'Lesson',
+        content: [
+            { word: "આ કેટલાનું છે?", transliteration: "Aa ketlanu chhe?", meaning: "How much is this?", example: "માફ કરશો, આ શર્ટ કેટલાનું છે?", audio: "audio/ketlanu_gu.mp3" },
+            { word: "...ક્યાં છે?", transliteration: "...kyaan chhe?", meaning: "Where is...?", example: "સૌથી નજીકનું રેલ્વે સ્ટેશન ક્યાં છે?", audio: "audio/kyaan_gu.mp3" },
+            { word: "મને...જોઈએ છે", transliteration: "Mane...joie chhe", meaning: "I need/want...", example: "મને એક કપ કોફી જોઈએ છે, કૃપા કરીને.", audio: "audio/joie_gu.mp3" },
+            { word: "શું તમે મારી મદદ કરી શકશો?", transliteration: "Shu tame mari madad kari shakasho?", meaning: "Can you help me?", example: "માફ કરશો, આ સરનામું શોધવામાં શું તમે મારી મદદ કરી શકશો?", audio: "audio/madad_gu.mp3" }
+        ],
+        quiz: [
+            { question: "ગુજરાતીમાં કિંમત પૂછવા તમે શું કહો?", options: ["...ક્યાં છે?", "આ કેટલાનું છે?", "શું તમે મારી મદદ કરી શકશો?"], answer: "આ કેટલાનું છે?" },
+            { question: "નમ્ર વિનંતી માટે કયું વાક્ય વાપરો?", options: ["મને...જોઈએ છે", "...ક્યાં છે?", "આ કેટલાનું છે?"], answer: "મને...જોઈએ છે" }
+        ]
+    },
+    {
+        lesson_id: "bn_02",
+        language: "Bengali",
+        title: "কেনাকাটা এবং প্রশ্ন",
+        description: "কেনাকাটা এবং মৌলিক প্রশ্নের জন্য দরকারী বাক্যাংশ শিখুন।",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'bn',
+        category: 'Lesson',
+        content: [
+            { word: "এটি কত?", transliteration: "Eti koto?", meaning: "How much is this?", example: "মাফ করবেন, এই শার্টটি কত?", audio: "audio/koto_bn.mp3" },
+            { word: "...কোথায়?", transliteration: "...kothay?", meaning: "Where is...?", example: "সবচেয়ে কাছের রেলওয়ে স্টেশন কোথায়?", audio: "audio/kothay_bn.mp3" },
+            { word: "আমার...দরকার", transliteration: "Amar...dorkar", meaning: "I need/want...", example: "আমার এক কাপ কফি দরকার, অনুগ্রহ করে।", audio: "audio/dorkar_bn.mp3" },
+            { word: "আপনি কি আমায় সাহায্য করতে পারেন?", transliteration: "Apni ki amay sahajjo korte paren?", meaning: "Can you help me?", example: "মাফ করবেন, এই ঠিকানা খুঁজতে আপনি কি আমায় সাহায্য করতে পারেন?", audio: "audio/sahajjo_bn.mp3" }
+        ],
+        quiz: [
+            { question: "বাংলায় দাম জিজ্ঞাসা করতে আপনি কী বলবেন?", options: ["...কোথায়?", "এটি কত?", "আপনি কি আমায় সাহায্য করতে পারেন?"], answer: "এটি কত?" },
+            { question: "ভদ্র অনুরোধের জন্য কোন বাক্যাংশ ব্যবহার করা হয়?", options: ["আমার...দরকার", "...কোথায়?", "এটি কত?"], answer: "আমার...দরকার" }
+        ]
+    },
+    {
+        lesson_id: "it_02",
+        language: "Italian",
+        title: "Fare la Spesa",
+        description: "Impara frasi utili per fare la spesa e porre domande di base.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'it',
+        category: 'Lesson',
+        content: [
+            { word: "Quanto costa?", transliteration: "Quanto costa", meaning: "How much is it?", example: "Scusi, quanto costa questa camicia?", audio: "audio/quanto_it.mp3" },
+            { word: "Dov'è...?", transliteration: "Dov'è", meaning: "Where is...?", example: "Dov'è la stazione ferroviaria più vicina?", audio: "audio/dove_it.mp3" },
+            { word: "Vorrei...", transliteration: "Vorrei", meaning: "I would like...", example: "Vorrei una tazza di caffè, per favore.", audio: "audio/vorrei_it.mp3" },
+            { word: "Può aiutarmi?", transliteration: "Può aiutarmi", meaning: "Can you help me?", example: "Scusi, può aiutarmi a trovare questo indirizzo?", audio: "audio/aiutarmi_it.mp3" }
+        ],
+        quiz: [
+            { question: "Come si chiede il prezzo in italiano?", options: ["Dov'è...?", "Quanto costa?", "Può aiutarmi?"], answer: "Quanto costa?" },
+            { question: "Quale frase si usa per fare una richiesta educata?", options: ["Vorrei...", "Dov'è...?", "Quanto costa?"], answer: "Vorrei..." }
+        ],
+        cultureCapsule: {
+            title: "Il Mercato",
+            icon: "🍅",
+            content: "Italian markets (*mercati*) are lively and colorful. Vendors take pride in their fresh produce, cheese, and meat. It's customary to greet the vendor and let them choose the best items for you—touching produce yourself is often frowned upon!"
+        }
+    },
+    {
+        lesson_id: "nl_02",
+        language: "Dutch",
+        title: "Winkelen en Vragen",
+        description: "Leer nuttige zinnen voor het winkelen en basis vragen stellen.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'nl',
+        category: 'Lesson',
+        content: [
+            { word: "Hoeveel kost dit?", transliteration: "Hoeveel kost dit", meaning: "How much is this?", example: "Pardon, hoeveel kost dit shirt?", audio: "audio/hoeveel_nl.mp3" },
+            { word: "Waar is...?", transliteration: "Waar is", meaning: "Where is...?", example: "Waar is het dichtstbijzijnde treinstation?", audio: "audio/waar_nl.mp3" },
+            { word: "Ik wil graag...", transliteration: "Ik wil graag", meaning: "I would like...", example: "Ik wil graag een kopje koffie, alstublieft.", audio: "audio/graag_nl.mp3" },
+            { word: "Kunt u mij helpen?", transliteration: "Kunt u mij helpen", meaning: "Can you help me?", example: "Pardon, kunt u mij helpen dit adres te vinden?", audio: "audio/helpen_nl.mp3" }
+        ],
+        quiz: [
+            { question: "Hoe vraag je de prijs in het Nederlands?", options: ["Waar is...?", "Hoeveel kost dit?", "Kunt u mij helpen?"], answer: "Hoeveel kost dit?" },
+            { question: "Welke zin gebruik je voor een beleefde vraag?", options: ["Ik wil graag...", "Waar is...?", "Hoeveel kost dit?"], answer: "Ik wil graag..." }
+        ]
+    },
+    {
+        lesson_id: "da_02",
+        language: "Danish",
+        title: "Shopping og Spørgsmål",
+        description: "Lær nyttige sætninger til indkøb og grundlæggende spørgsmål.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'da',
+        category: 'Lesson',
+        content: [
+            { word: "Hvor meget koster det?", transliteration: "Hvor meget koster det", meaning: "How much is this?", example: "Undskyld, hvor meget koster denne skjorte?", audio: "audio/hvormegett_da.mp3" },
+            { word: "Hvor er...?", transliteration: "Hvor er", meaning: "Where is...?", example: "Hvor er den nærmeste togstation?", audio: "audio/hvorer_da.mp3" },
+            { word: "Jeg vil gerne have...", transliteration: "Jeg vil gerne have", meaning: "I would like...", example: "Jeg vil gerne have en kop kaffe, tak.", audio: "audio/gerne_da.mp3" },
+            { word: "Kan du hjælpe mig?", transliteration: "Kan du hjælpe mig", meaning: "Can you help me?", example: "Undskyld, kan du hjælpe mig med at finde denne adresse?", audio: "audio/hjaelpe_da.mp3" }
+        ],
+        quiz: [
+            { question: "Hvordan spørger man om prisen på dansk?", options: ["Hvor er...?", "Hvor meget koster det?", "Kan du hjælpe mig?"], answer: "Hvor meget koster det?" },
+            { question: "Hvilken sætning bruger man til en høflig anmodning?", options: ["Jeg vil gerne have...", "Hvor er...?", "Hvor meget koster det?"], answer: "Jeg vil gerne have..." }
+        ]
+    },
+    {
+        lesson_id: "pt_02",
+        language: "Portuguese",
+        title: "Compras e Perguntas",
+        description: "Aprenda frases úteis para fazer compras e perguntas básicas.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'pt',
+        category: 'Lesson',
+        content: [
+            { word: "Quanto custa?", transliteration: "Quanto custa", meaning: "How much is it?", example: "Com licença, quanto custa esta camisa?", audio: "audio/quanto_pt.mp3" },
+            { word: "Onde fica...?", transliteration: "Onde fica", meaning: "Where is...?", example: "Onde fica a estação de trem mais próxima?", audio: "audio/onde_pt.mp3" },
+            { word: "Eu gostaria de...", transliteration: "Eu gostaria de", meaning: "I would like...", example: "Eu gostaria de uma xícara de café, por favor.", audio: "audio/gostaria_pt.mp3" },
+            { word: "Você pode me ajudar?", transliteration: "Você pode me ajudar", meaning: "Can you help me?", example: "Com licença, você pode me ajudar a encontrar este endereço?", audio: "audio/ajudar_pt.mp3" }
+        ],
+        quiz: [
+            { question: "Como você pergunta o preço em português?", options: ["Onde fica...?", "Quanto custa?", "Você pode me ajudar?"], answer: "Quanto custa?" },
+            { question: "Qual frase você usa para fazer um pedido educado?", options: ["Eu gostaria de...", "Onde fica...?", "Quanto custa?"], answer: "Eu gostaria de..." }
+        ]
+    },
+    {
+        lesson_id: "fi_02",
+        language: "Finnish",
+        title: "Ostokset ja Kysymykset",
+        description: "Opi hyödyllisiä lauseita ostoksille ja peruskysymyksille.",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'fi',
+        category: 'Lesson',
+        content: [
+            { word: "Paljonko tämä maksaa?", transliteration: "Paljonko tämä maksaa", meaning: "How much is this?", example: "Anteeksi, paljonko tämä paita maksaa?", audio: "audio/paljonko_fi.mp3" },
+            { word: "Missä on...?", transliteration: "Missä on", meaning: "Where is...?", example: "Missä on lähin rautatieasema?", audio: "audio/missa_fi.mp3" },
+            { word: "Haluaisin...", transliteration: "Haluaisin", meaning: "I would like...", example: "Haluaisin kupillisen kahvia, kiitos.", audio: "audio/haluaisin_fi.mp3" },
+            { word: "Voitko auttaa minua?", transliteration: "Voitko auttaa minua", meaning: "Can you help me?", example: "Anteeksi, voitko auttaa minua löytämään tämän osoitteen?", audio: "audio/auttaa_fi.mp3" }
+        ],
+        quiz: [
+            { question: "Miten kysyt hintaa suomeksi?", options: ["Missä on...?", "Paljonko tämä maksaa?", "Voitko auttaa minua?"], answer: "Paljonko tämä maksaa?" },
+            { question: "Mitä lausetta käytät kohteliaaseen pyyntöön?", options: ["Haluaisin...", "Missä on...?", "Paljonko tämä maksaa?"], answer: "Haluaisin..." }
+        ]
+    },
+    {
+        lesson_id: "sa_02",
+        language: "Sanskrit",
+        title: "व्यवहारिक संवाद",
+        description: "दैनिक संवाद के लिए उपयोगी वाक्यांश सीखें।",
+        level: "Intermediate",
+        emoji: "🛍️",
+        lang: 'sa',
+        category: 'Lesson',
+        content: [
+            { word: "एतस्य मूल्यं किम्?", transliteration: "Etasya moolyam kim?", meaning: "What is its price?", example: "क्षम्यताम्, एतस्य वस्त्रस्य मूल्यं किम्?", audio: "audio/moolyam_sa.mp3" },
+            { word: "...कुत्र अस्ति?", transliteration: "...kutra asti?", meaning: "Where is...?", example: "रेलमार्गस्थानकं कुत्र अस्ति?", audio: "audio/kutra_sa.mp3" },
+            { word: "मह्यं...आवश्यकम्", transliteration: "Mahyam...aavashyakam", meaning: "I need...", example: "मह्यं एकं कॉफी पात्रं आवश्यकम्।", audio: "audio/aavashyakam_sa.mp3" },
+            { word: "भवान् मां साहाय्यं कर्तुं शक्नोति किम्?", transliteration: "Bhavaan maam sahayyam kartum shaknoti kim?", meaning: "Can you help me?", example: "क्षम्यताम्, एतत् पत्रं अन्वेष्टुं भवान् मां साहाय्यं कर्तुं शक्नोति किम्?", audio: "audio/sahayyam_sa.mp3" }
+        ],
+        quiz: [
+            { question: "संस्कृत में मूल्य पूछने के लिए आप क्या कहेंगे?", options: ["...कुत्र अस्ति?", "एतस्य मूल्यं किम्?", "भवान् मां साहाय्यं कर्तुं शक्नोति किम्?"], answer: "एतस्य मूल्यं किम्?" },
+            { question: "विनम्र अनुरोध के लिए कौन सा वाक्यांश उपयोग करते हैं?", options: ["मह्यं...आवश्यकम्", "...कुत्र अस्ति?", "एतस्य मूल्यं किम्?"], answer: "मह्यं...आवश्यकम्" }
+        ]
     }
 ];
 

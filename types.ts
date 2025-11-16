@@ -200,3 +200,107 @@ export interface Persona {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   categories: (Scenario['category'] | 'Lesson')[];
 }
+
+// Social Feed Types
+export interface Post {
+  id: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  content: string;
+  imageUrl?: string;
+  language?: string; // Language being learned/practiced
+  createdAt: any; // Firestore Timestamp
+  likesCount: number;
+  commentsCount: number;
+}
+
+export interface Comment {
+  id: string;
+  postId: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  content: string;
+  createdAt: any; // Firestore Timestamp
+}
+
+export interface Like {
+  id: string;
+  postId: string;
+  userId: string;
+  createdAt: any; // Firestore Timestamp
+}
+
+// Tutor Marketplace Types
+export interface TutorProfile {
+  id: string;
+  userId: string; // Auth user ID
+  name: string;
+  email: string;
+  photoURL?: string;
+  nativeLanguages: string[]; // Language codes
+  teachingLanguages: string[]; // Language codes they can teach
+  specialty: string;
+  bio: string;
+  hourlyRate: number; // in USD
+  rating: number; // 0-5
+  totalSessions: number;
+  totalReviews: number;
+  isOnline: boolean;
+  isVerified: boolean; // Admin approved
+  availability: AvailabilitySlot[]; // Weekly recurring schedule
+  createdAt: any; // Firestore Timestamp
+  updatedAt: any; // Firestore Timestamp
+}
+
+export interface AvailabilitySlot {
+  dayOfWeek: number; // 0-6 (Sunday-Saturday)
+  startTime: string; // "09:00"
+  endTime: string; // "17:00"
+  timezone: string; // "America/New_York"
+}
+
+export interface TutorApplication {
+  id: string;
+  userId: string;
+  name: string;
+  email: string;
+  nativeLanguages: string[];
+  teachingLanguages: string[];
+  specialty: string;
+  bio: string;
+  hourlyRate: number;
+  availability: AvailabilitySlot[];
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: any;
+  reviewedAt?: any;
+  reviewedBy?: string; // Admin user ID
+}
+
+export interface Booking {
+  id: string;
+  studentId: string;
+  studentName: string;
+  tutorId: string;
+  tutorName: string;
+  scheduledAt: any; // Firestore Timestamp
+  duration: number; // in minutes
+  price: number; // in USD
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  meetingLink?: string; // Video call link
+  notes?: string;
+  createdAt: any;
+  updatedAt: any;
+}
+
+export interface TutorReview {
+  id: string;
+  bookingId: string;
+  tutorId: string;
+  studentId: string;
+  studentName: string;
+  rating: number; // 1-5
+  comment: string;
+  createdAt: any;
+}

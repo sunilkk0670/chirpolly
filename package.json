@@ -15,9 +15,11 @@
     "firebase": "^12.5.0",
     "framer-motion": "^11.3.11",
     "lottie-react": "^2.4.0",
+    "lucide-react": "^0.553.0",
     "marked": "^16.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-router": "^6.25.1",
     "react-router-dom": "^6.25.1"
   },

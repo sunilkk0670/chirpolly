@@ -8,6 +8,7 @@ import { Spinner } from './common/Spinner';
 import { generateImage } from '../services/geminiService';
 import { TrophyIcon, MicrophoneIcon } from './icons/Icons';
 import type { CommunityUser, LeaderboardUser } from '../types';
+import SocialFeed from './SocialFeed';
 
 const getLanguageName = (code: string): string => {
     return LANGUAGES.find(lang => lang.code === code)?.name || code;
@@ -146,6 +147,12 @@ export const CommunityView: React.FC = () => {
                 </h1>
                 <p className="mt-2 text-lg text-gray-600">Learn, chat, and grow together with challenges, leaderboards, and language partners.</p>
             </div>
+            
+            {/* Social Feed */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-700 font-poppins mb-4">Social Feed</h2>
+                <SocialFeed />
+            </section>
             
             {/* Peer Challenges */}
             <section>
