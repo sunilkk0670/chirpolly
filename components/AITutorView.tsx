@@ -57,8 +57,11 @@ function createBlob(data: Float32Array): Blob {
     };
 }
 
+// Fallback to demo API key if not configured
+// check all possible env vars
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || ((import.meta as any).env && ((import.meta as any).env.VITE_GEMINI_API_KEY || (import.meta as any).env.VITE_API_KEY)) || 'demo-api-key-for-development';
 
-const ai = new GoogleGenAI({ apiKey: (import.meta as any).env.VITE_GEMINI_API_KEY || 'demo-api-key-for-development' });
+const ai = new GoogleGenAI({ apiKey });
 
 export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -151,7 +154,7 @@ export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => 
             const systemPrompt = `${POLLY_PERSONA}\n\nYou are teaching ${language.name}.`;
 
             sessionPromiseRef.current = ai.live.connect({
-                model: 'gemini-2.5-flash-native-audio-preview-09-2025',
+                model: 'gemini-2.0-flash-exp',
                 callbacks: {
                     onopen: () => {
                         console.log('Live session opened.');

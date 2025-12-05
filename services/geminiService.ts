@@ -11,8 +11,8 @@ export interface AdaptiveStep {
 }
 
 // Fallback to demo API key if not configured
-// Support both process.env (Webpack/Node) and import.meta.env (Vite)
-const apiKey = process.env.API_KEY || (import.meta.env && import.meta.env.VITE_API_KEY) || 'demo-api-key-for-development';
+// Check all possible environment variable sources supporting both Vite and Standard Node envs
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || ((import.meta as any).env && ((import.meta as any).env.VITE_GEMINI_API_KEY || (import.meta as any).env.VITE_API_KEY)) || 'demo-api-key-for-development';
 
 if (!apiKey || apiKey === 'demo-api-key-for-development') {
     console.warn('⚠️ GEMINI_API_KEY not configured. Running in demo mode - AI features will not work.');
@@ -38,7 +38,7 @@ Traits:
 export const generateContent = async (prompt: string): Promise<string> => {
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             contents: prompt,
         });
         return response.text;
@@ -64,7 +64,7 @@ If there are no errors, do not include the grammar check section.
 export const startChat = (systemPrompt: string = POLLY_PERSONA) => {
     activeChat = ai.chats.create({
         // Fix: Updated model name to 'gemini-flash-lite-latest' as per the coding guidelines for 'flash lite' models.
-        model: 'gemini-flash-lite-latest',
+        model: 'gemini-1.5-flash',
         config: {
             systemInstruction: systemPrompt,
         },
@@ -83,7 +83,7 @@ export const sendMessage = async (message: string, includeGrammarCheck: boolean)
 export const analyzeGrammar = async (text: string): Promise<string> => {
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-pro',
+            model: 'gemini-1.5-pro',
             contents: `You are an expert language tutor. Provide a detailed grammatical breakdown of the following text. Explain verb tenses, sentence structure, parts of speech, and any potential errors or areas for improvement. Format your response using markdown. Text: "${text}"`,
             config: {
                 thinkingConfig: { thinkingBudget: 32768 }
@@ -121,7 +121,7 @@ export const generateImage = async (prompt: string): Promise<string | null> => {
 export const editImage = async (base64Image: string, mimeType: string, prompt: string): Promise<string | null> => {
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-image',
+            model: 'gemini-1.5-flash',
             contents: {
                 parts: [
                     {
@@ -163,7 +163,7 @@ export const generateVocabularyFromImage = async (base64Image: string, mimeType:
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             contents: {
                 parts: [
                     {
@@ -206,7 +206,7 @@ export const generateVocabularyFromImage = async (base64Image: string, mimeType:
 export const generateSpeech = async (prompt: string): Promise<string | null> => {
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash-preview-tts",
+            model: "gemini-2.0-flash-exp",
             contents: [{ parts: [{ text: prompt }] }],
             config: {
                 responseModalities: [Modality.AUDIO],
@@ -238,7 +238,7 @@ Provide a short, constructive analysis of their pronunciation based on the trans
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-pro',
+            model: 'gemini-1.5-pro',
             contents: prompt,
         });
         return response.text;
@@ -260,7 +260,7 @@ Return the quiz as a JSON array.`;
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
