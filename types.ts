@@ -102,21 +102,26 @@ export interface VocabularyWord {
   transliteration: string;
   meaning: string;
   audio_prompt: string;
+  // SRS Fields
+  easinessFactor?: number;
+  interval?: number;
+  repetitions?: number;
+  nextReviewDate?: number;
 }
 
 export interface LessonUnit {
-    unitId: string;
-    title: string;
-    emoji: string;
-    words: VocabularyWord[];
-    isLocked?: boolean;
+  unitId: string;
+  title: string;
+  emoji: string;
+  words: VocabularyWord[];
+  isLocked?: boolean;
 }
 
 export interface LearningModule {
-    level: string;
-    theme: string;
-    description: string;
-    units: LessonUnit[];
+  level: string;
+  theme: string;
+  description: string;
+  units: LessonUnit[];
 }
 
 export interface MediaItem {
@@ -161,15 +166,15 @@ export interface ImageVocabularyWord {
 }
 
 export interface PracticePhrase {
-    id: string;
-    phrase: string;
-    translation: string;
-    audio_prompt: string;
+  id: string;
+  phrase: string;
+  translation: string;
+  audio_prompt: string;
 }
 
 export interface PhraseCategory {
-    category: string;
-    phrases: PracticePhrase[];
+  category: string;
+  phrases: PracticePhrase[];
 }
 
 export interface Kanji {

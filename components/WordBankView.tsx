@@ -1,5 +1,3 @@
-
-
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import type { Language, LearningModule, LessonUnit, VocabularyWord, QuizQuestion } from '../types';
 import { LEARNING_PATH } from '../i18n/learningPath';
@@ -7,35 +5,36 @@ import { SpeakerWaveIcon, LockIcon } from './icons/Icons';
 import { generateSpeech, generateQuizForUnit } from '../services/geminiService';
 import { Spinner } from './common/Spinner';
 import { Button } from './common/Button';
+import { initializeSRS } from '../services/srsService';
 
 // --- Audio Decoding Helpers (Required for Text-to-Speech) ---
 function decode(base64: string) {
-  const binaryString = atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes;
+    const binaryString = atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
 }
 
 async function decodeAudioData(
-  data: Uint8Array,
-  ctx: AudioContext,
-  sampleRate: number,
-  numChannels: number,
+    data: Uint8Array,
+    ctx: AudioContext,
+    sampleRate: number,
+    numChannels: number,
 ): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
-  const frameCount = dataInt16.length / numChannels;
-  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+    const dataInt16 = new Int16Array(data.buffer);
+    const frameCount = dataInt16.length / numChannels;
+    const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
 
-  for (let channel = 0; channel < numChannels; channel++) {
-    const channelData = buffer.getChannelData(channel);
-    for (let i = 0; i < frameCount; i++) {
-      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+    for (let channel = 0; channel < numChannels; channel++) {
+        const channelData = buffer.getChannelData(channel);
+        for (let i = 0; i < frameCount; i++) {
+            channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+        }
     }
-  }
-  return buffer;
+    return buffer;
 }
 
 
@@ -65,7 +64,7 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
                 audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
             }
             const audioCtx = audioCtxRef.current;
-            
+
             const audioBuffer = await decodeAudioData(
                 decode(base64Audio),
                 audioCtx,
@@ -118,7 +117,7 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
     const handleOptionSelect = (option: string) => {
         if (showFeedback) return;
         setSelectedOption(option);
-        
+
         if (currentQuestion && option === currentQuestion.answer) {
             setScore(prev => prev + 1);
         }
@@ -225,7 +224,7 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
                 return (
                     <>
                         <div className="overflow-y-auto space-y-3 pr-2 flex-grow">
-                             {unit.words.map((item, index) => (
+                            {unit.words.map((item, index) => (
                                 <div key={index} className="p-4 bg-sky-50 rounded-lg border border-sky-200/50 flex items-center">
                                     <div className="flex-grow">
                                         <div className="flex items-baseline gap-x-3">
@@ -250,23 +249,23 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
                             ))}
                         </div>
                         <div className="mt-6 border-t border-slate-200/80 pt-4">
-                             <h3 className="font-semibold text-gray-700 text-center mb-2">Ready to test your knowledge?</h3>
-                             {quizError && <p className="text-red-500 text-sm text-center mb-2">{quizError}</p>}
-                             <Button onClick={handleStartQuiz} className="w-full">
-                                 Start Quiz
-                             </Button>
-                         </div>
+                            <h3 className="font-semibold text-gray-700 text-center mb-2">Ready to test your knowledge?</h3>
+                            {quizError && <p className="text-red-500 text-sm text-center mb-2">{quizError}</p>}
+                            <Button onClick={handleStartQuiz} className="w-full">
+                                Start Quiz
+                            </Button>
+                        </div>
                     </>
                 );
         }
     };
-    
+
     return (
-        <div 
+        <div
             className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={onClose}
         >
-            <div 
+            <div
                 className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl max-w-2xl w-full p-6 border border-white/30 relative max-h-[90vh] flex flex-col"
                 onClick={(e) => e.stopPropagation()}
             >
@@ -295,10 +294,12 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
             const savedProgress = localStorage.getItem(storageKey);
             if (savedProgress) {
                 setCompletedUnits(new Set(JSON.parse(savedProgress)));
+            } else {
+                setCompletedUnits(new Set()); // Initialize with empty set if no saved progress
             }
         } catch (error) {
-            console.error("Failed to load progress:", error);
-            setCompletedUnits(new Set());
+            console.error("Failed to load progress from localStorage:", error);
+            setCompletedUnits(new Set()); // Fallback to empty set on error
         }
     }, [language.code, storageKey]);
 
@@ -308,24 +309,43 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
             newProgress.add(unitId);
             try {
                 localStorage.setItem(storageKey, JSON.stringify(Array.from(newProgress)));
+
+                // --- SRS Integration ---
+                // Find the unit and add its words to the SRS data
+                const unit = modules.flatMap(m => m.units).find(u => u.unitId === unitId);
+                if (unit) {
+                    const srsData = localStorage.getItem('chirpolly-srs-data');
+                    let allWords: VocabularyWord[] = srsData ? JSON.parse(srsData) : [];
+
+                    // Add new words if they don't exist
+                    unit.words.forEach(word => {
+                        if (!allWords.some(w => w.word === word.word)) {
+                            allWords.push(initializeSRS(word));
+                        }
+                    });
+
+                    localStorage.setItem('chirpolly-srs-data', JSON.stringify(allWords));
+                }
+                // -----------------------
+
             } catch (error) {
                 console.error("Failed to save progress:", error);
             }
             return newProgress;
         });
     };
-    
+
     const allUnits = useMemo(() => modules.flatMap(module => module.units), [modules]);
 
     return (
         <div className="max-w-4xl mx-auto animate-fade-in">
             {selectedUnit && <UnitDetailModal unit={selectedUnit} onClose={() => setSelectedUnit(null)} language={language} onUnitComplete={handleUnitComplete} />}
-            
+
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold font-poppins text-gray-800">Learning Path: {language.name}</h1>
                 <p className="text-lg text-gray-600 mt-1">Follow your path from beginner to fluency.</p>
             </div>
-            
+
             {modules.length > 0 ? (
                 <div className="space-y-6">
                     {modules.map((module) => (
@@ -342,7 +362,7 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
                                     const isLocked = unitIndex > 0 && !completedUnits.has(allUnits[unitIndex - 1].unitId);
 
                                     return (
-                                        <button 
+                                        <button
                                             key={unit.unitId}
                                             onClick={() => setSelectedUnit(unit)}
                                             disabled={isLocked}

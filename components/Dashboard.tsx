@@ -91,6 +91,13 @@ const StatCard: React.FC<{ title: string, icon: React.ReactNode, children: React
 
 // --- Main Dashboard Component ---
 
+import { getDueWords } from '../services/srsService';
+import { ReviewSession } from './ReviewSession';
+import { VocabularyWord } from '../types';
+import { LEARNING_PATH } from '../i18n/learningPath';
+
+// --- Main Dashboard Component ---
+
 interface DashboardProps {
     onScenarioSelect: (scenario: Scenario) => void;
     onLessonSelect: (lesson: Lesson) => void;
@@ -102,10 +109,45 @@ interface DashboardProps {
 
 export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLessonSelect, scenarios, lessons, isInactive }) => {
     const [dailyChallenge, setDailyChallenge] = useState<Challenge | null>(null);
+    const [dueWords, setDueWords] = useState<VocabularyWord[]>([]);
+    const [showReview, setShowReview] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
+    // Load due words on mount
     useEffect(() => {
+        // Find current language from URL or props (assuming props passed from parent or context)
+        // For now, we'll scan all local storage keys for progress
+        // Ideally, this should be passed as a prop "currentLanguage"
+        const loadDueWords = () => {
+            let allDueWords: VocabularyWord[] = [];
+
+            // Iterate through all languages in localStorage
+            // Key format: chirpolly-progress-{langCode}
+            // Value: ["unitId1", "unitId2"]
+
+            // We need to fetch the actual words from LEARNING_PATH based on completed units
+            // This is a bit heavy, but works for now. 
+            // Better approach: Store "learnedWords" separately in localStorage with SRS data.
+
+            // Let's try to find the "learnedWords" storage if it exists, otherwise migrate/build it
+            // For this MVP, we will look for a specific key 'chirpolly-srs-data'
+
+            try {
+                const srsData = localStorage.getItem('chirpolly-srs-data');
+                if (srsData) {
+                    const parsedWords: VocabularyWord[] = JSON.parse(srsData);
+                    allDueWords = getDueWords(parsedWords);
+                }
+            } catch (e) {
+                console.error("Failed to load SRS data", e);
+            }
+
+            setDueWords(allDueWords);
+        };
+
+        loadDueWords();
+
         const dailyChallenges = CHALLENGES.filter(c => c.type === 'daily');
         if (dailyChallenges.length > 0) {
             setDailyChallenge(dailyChallenges[Math.floor(Math.random() * dailyChallenges.length)]);
@@ -122,6 +164,30 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         }
     };
 
+    const handleReviewComplete = (updatedWords: VocabularyWord[]) => {
+        // Update local storage
+        try {
+            const srsData = localStorage.getItem('chirpolly-srs-data');
+            let allWords: VocabularyWord[] = srsData ? JSON.parse(srsData) : [];
+
+            // Update the words that were reviewed
+            updatedWords.forEach(updated => {
+                const index = allWords.findIndex(w => w.word === updated.word); // Assuming word is unique ID for now
+                if (index !== -1) {
+                    allWords[index] = updated;
+                } else {
+                    allWords.push(updated);
+                }
+            });
+
+            localStorage.setItem('chirpolly-srs-data', JSON.stringify(allWords));
+            setDueWords(getDueWords(allWords)); // Refresh due count
+        } catch (e) {
+            console.error("Failed to save SRS data", e);
+        }
+        setShowReview(false);
+    };
+
 
     // Mock data for stats
     const dailyStreak = 4;
@@ -130,6 +196,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
 
     return (
         <div className="space-y-8 p-4 max-w-7xl mx-auto">
+            {showReview && (
+                <ReviewSession
+                    dueWords={dueWords}
+                    onComplete={handleReviewComplete}
+                    onClose={() => setShowReview(false)}
+                />
+            )}
+
             {/* Header Section */}
             <header className="text-center md:text-left">
                 <h1 className="text-4xl lg:text-5xl font-bold font-poppins text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-rose-500">
@@ -182,6 +256,29 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                     </button>
                 </div>
             </section>
+
+            {/* Daily Review Section - SRS */}
+            {dueWords.length > 0 && (
+                <motion.section
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-gradient-to-br from-amber-100 to-orange-50 rounded-2xl p-6 border-2 border-orange-200 shadow-md"
+                >
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="text-2xl font-bold text-orange-800 mb-1">Daily Review</h2>
+                            <p className="text-orange-700">You have <span className="font-bold">{dueWords.length} words</span> due for review today.</p>
+                        </div>
+                        <button
+                            onClick={() => setShowReview(true)}
+                            className="px-6 py-3 bg-orange-500 text-white font-bold rounded-xl shadow-lg hover:bg-orange-600 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                        >
+                            <span>Start Review</span>
+                            <span className="bg-white/20 px-2 py-0.5 rounded text-sm">{dueWords.length}</span>
+                        </button>
+                    </div>
+                </motion.section>
+            )}
 
             {/* Core Lessons Section */}
             {lessons.length > 0 && (
