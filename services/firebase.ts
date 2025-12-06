@@ -11,6 +11,11 @@ const firebaseConfig = {
   messagingSenderId: (import.meta.env as any).VITE_FIREBASE_MESSAGING_SENDER_ID || 'demo-sender-id',
   appId: (import.meta.env as any).VITE_FIREBASE_APP_ID || 'demo-app-id',
 };
+console.log('🔥 FIREBASE CONFIG DEBUG:', {
+  apiKey: firebaseConfig.apiKey ? `${firebaseConfig.apiKey.substring(0, 5)}...` : 'MISSING',
+  projectId: firebaseConfig.projectId,
+  authDomain: firebaseConfig.authDomain
+});
 
 // Check if running on localhost (development)
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
