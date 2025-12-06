@@ -26,3 +26,24 @@ dist-ssr
 
 # Firebase
 .firebase/
+# ============================================
+# Environment Variables - NEVER COMMIT THESE!
+# ============================================
+
+# All environment files
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# Any file ending in .env
+*.env
+
+# Backup env files
+.env.backup
+.env.old
+.env.save
