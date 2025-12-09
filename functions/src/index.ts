@@ -7,9 +7,6 @@ import { SpeechClient } from '@google-cloud/speech';
 interface ChatRequestData {
     prompt: string;
 }
-interface AudioRequestData {
-    audioContent: string; // The base64 string from the frontend
-}
 
 // --- 2. Client Initializations ---
 // Initialize clients outside the function to reuse connections (better performance)
@@ -47,13 +44,26 @@ export const chatWithPolly = functions.https.onCall(async (data) => {
 
 
 // --- 4. transcribeAudio Function (Speech-to-Text) ---
-export const transcribeAudio = functions.https.onCall(async (data) => {
+export const transcribeAudio = functions.https.onCall(async (data: any) => {
 
-    // Safely destructure data using the interface (Fixes audioContent length: 0 crash)
-    const { audioContent } = data as unknown as AudioRequestData;
+    // Log what we receive to debug
+    console.log('transcribeAudio called with data:', {
+        hasData: !!data,
+        dataKeys: data ? Object.keys(data) : [],
+        audioContentLength: (data && data.audioContent) ? data.audioContent.length : 0,
+    });
+
+    // Access audioContent directly from data
+    const audioContent = data && data.audioContent;
+    const languageCode = (data && data.languageCode) || 'en-US';
 
     // Validate that audio content was received
-    if (!audioContent) {
+    if (!audioContent || typeof audioContent !== 'string') {
+        console.error('Invalid audio content received:', {
+            hasAudioContent: !!audioContent,
+            type: typeof audioContent,
+            length: audioContent ? audioContent.length : 0,
+        });
         throw new functions.https.HttpsError('invalid-argument', 'Audio content is required for transcription.');
     }
 
@@ -66,7 +76,7 @@ export const transcribeAudio = functions.https.onCall(async (data) => {
         // Example encoding and sample rate for a common recording type (e.g., audio/webm; codecs=opus)
         encoding: 'WEBM_OPUS' as const,
         sampleRateHertz: 48000, // CHECK THIS AGAINST YOUR MICROPHONE SETTINGS
-        languageCode: 'en-US',
+        languageCode: languageCode, // Use the language code from request
     };
 
     const request = {
