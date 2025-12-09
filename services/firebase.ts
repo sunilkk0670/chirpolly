@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 
 // Firebase config is provided via Vite env variables (prefix VITE_)
 const firebaseConfig = {
@@ -26,6 +27,7 @@ if (isDemoMode) {
 let app;
 let auth;
 let db;
+let functions;
 
 try {
   if (getApps().length === 0) {
@@ -35,6 +37,7 @@ try {
   }
   auth = getAuth(app);
   db = getFirestore(app);
+  functions = getFunctions(app, 'us-central1');
 
   // Use Firebase emulator for localhost development
   // TEMPORARILY DISABLED - Using production Firebase for testing
@@ -75,10 +78,11 @@ try {
   try {
     auth = getAuth(app);
     db = getFirestore(app);
+    functions = getFunctions(app, 'us-central1');
   } catch (e) {
-    console.warn('Using fallback auth/db in demo mode');
+    console.warn('Using fallback auth/db/functions in demo mode');
   }
 }
 
-export { auth, db, app };
+export { auth, db, app, functions };
 export const isDemoModeEnabled = isDemoMode;

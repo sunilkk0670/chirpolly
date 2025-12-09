@@ -11,6 +11,7 @@ import { StarIcon } from './icons/Icons';
 import { fetchTutors, checkExistingApplication, checkIfUserIsTutor } from '../services/tutorService';
 import { TutorApplicationForm } from './TutorApplicationForm';
 import { BookingModal } from './BookingModal';
+import { AIChatCard } from './AIChatCard';
 
 const getLanguageName = (code: string): string => {
     return LANGUAGES.find(lang => lang.code === code)?.name || code;
@@ -120,6 +121,9 @@ export const TutorView: React.FC = () => {
                 </h1>
                 <p className="mt-2 text-lg text-gray-600">Connect with native speakers for on-demand conversation practice and feedback.</p>
             </div>
+
+            {/* AI Chat Card */}
+            <AIChatCard />
 
             <div className="bg-gradient-to-r from-sky-400 to-teal-400 p-6 rounded-xl shadow-lg text-white mb-8">
                 <div className="flex items-center gap-x-4">
