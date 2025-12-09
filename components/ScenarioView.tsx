@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { Scenario, Message, Language, GrammarFeedback } from '../types';
 import { SendIcon, SparklesIcon } from './icons/Icons';
 import { Spinner } from './common/Spinner';
+import { startChat, sendMessage } from '../services/geminiService';
 
 const parseResponse = (responseText: string): { text: string, feedback: GrammarFeedback | undefined } => {
     const feedbackMarker = '---GRAMMAR CHECK---';
     const endMarker = '---END GRAMMAR CHECK---';
-    
+
     const feedbackIndex = responseText.indexOf(feedbackMarker);
 
     if (feedbackIndex === -1) {
@@ -21,7 +22,7 @@ const parseResponse = (responseText: string): { text: string, feedback: GrammarF
 
     const correction = correctionMatch ? correctionMatch[1].trim() : 'N/A';
     const explanation = explanationMatch ? explanationMatch[1].trim() : 'N/A';
-    
+
     return {
         text,
         feedback: { correction, explanation }
@@ -68,7 +69,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
     // to the user's message before the model's response is added.
     const handleSend = async () => {
         if (!input.trim() || isLoading) return;
-        
+
         const userMessage: Message = { role: 'user', text: input };
         setMessages(prev => [...prev, userMessage]);
         setInput('');
@@ -85,10 +86,10 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     const lastMessageIndex = messagesWithFeedback.length - 1;
                     const lastMessage = messagesWithFeedback[lastMessageIndex];
                     if (lastMessage?.role === 'user') {
-                       messagesWithFeedback[lastMessageIndex] = {
-                           ...lastMessage,
-                           grammarFeedback: feedback,
-                       }
+                        messagesWithFeedback[lastMessageIndex] = {
+                            ...lastMessage,
+                            grammarFeedback: feedback,
+                        }
                     }
                 }
                 return [...messagesWithFeedback, modelMessage];
@@ -101,7 +102,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
             setIsLoading(false);
         }
     };
-    
+
     return (
         <div className="flex flex-col h-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg border-t-4 border-rose-400">
             <div className="p-4 border-b border-gray-200">
@@ -113,11 +114,11 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                 <div className="space-y-4">
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                           {msg.role === 'model' && <span className="text-2xl">🦜</span>}
-                           <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-rose-500 text-white' : 'bg-slate-100 text-gray-800'}`}>
-                               <p>{msg.text}</p>
-                           </div>
-                           {msg.role === 'user' && msg.grammarFeedback && (
+                            {msg.role === 'model' && <span className="text-2xl">🦜</span>}
+                            <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-rose-500 text-white' : 'bg-slate-100 text-gray-800'}`}>
+                                <p>{msg.text}</p>
+                            </div>
+                            {msg.role === 'user' && msg.grammarFeedback && (
                                 <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-900 animate-fade-in shadow-md">
                                     <h4 className="font-bold mb-1">Grammar Tip!</h4>
                                     <p><span className="font-semibold">Correction:</span> {msg.grammarFeedback.correction}</p>
@@ -134,7 +135,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     )}
                     {isLoading && messages.length > 0 && (
                         <div className="flex items-end gap-2 justify-start">
-                             <span className="text-2xl">🦜</span>
+                            <span className="text-2xl">🦜</span>
                             <div className="rounded-xl px-4 py-2 bg-slate-100">
                                 <Spinner />
                             </div>

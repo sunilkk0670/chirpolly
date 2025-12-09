@@ -127,8 +127,15 @@ export const transcribeAudio = async (
         type: audioBlob.type,
     });
 
+    // Check 1: Validate audio blob size
     if (audioBlob.size === 0) {
-        throw new Error('Audio blob is empty');
+        throw new Error('Audio blob is empty - please speak into your microphone');
+    }
+
+    // Check 2: Validate minimum audio size (typical silent audio is very small)
+    const MIN_AUDIO_SIZE = 1000; // bytes - adjust based on your needs
+    if (audioBlob.size < MIN_AUDIO_SIZE) {
+        throw new Error('Audio too short or silent - please speak louder and try again');
     }
 
     const transcribeFunction = httpsCallable(functions, 'transcribeAudio');
@@ -136,17 +143,35 @@ export const transcribeAudio = async (
 
     console.log('Base64 audio length:', audioBase64?.length || 0);
 
+    // Check 3: Validate base64 conversion
     if (!audioBase64 || audioBase64.length === 0) {
-        throw new Error('Failed to convert audio to base64');
+        throw new Error('Failed to convert audio to base64 - please try recording again');
     }
 
-    const result = await transcribeFunction({
-        audioContent: audioBase64,
-        languageCode,
-    });
+    try {
+        const result = await transcribeFunction({
+            audioContent: audioBase64,
+            languageCode,
+        });
 
-    const data = result.data as { transcript: string };
-    return data.transcript;
+        const data = result.data as { text: string };
+
+        // Check 4: Validate transcription result
+        if (!data.text || data.text.trim().length === 0) {
+            throw new Error('No speech detected in audio - please speak clearly and try again');
+        }
+
+        return data.text;
+    } catch (error: any) {
+        console.error('Transcription error:', error);
+
+        // Provide user-friendly error messages
+        if (error.message?.includes('Audio content is required')) {
+            throw new Error('Audio recording failed - please check your microphone permissions');
+        }
+
+        throw error;
+    }
 };
 
 /**
