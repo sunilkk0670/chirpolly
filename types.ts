@@ -1,6 +1,9 @@
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
 
+// Export marketplace types
+export * from './types/marketplace';
+
 export interface Language {
   code: string;
   name: string;

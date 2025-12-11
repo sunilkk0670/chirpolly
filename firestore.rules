@@ -1,26 +1,184 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow authenticated users to read and write their own data
-    match /users/{userId}/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    
+    // ============================================================================
+    // HELPER FUNCTIONS
+    // ============================================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
     }
     
-    // Allow authenticated users to read and write tutor data
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isSessionParticipant(session) {
+      return isAuthenticated() && 
+             (request.auth.uid == session.studentId || 
+              request.auth.uid == session.tutorId);
+    }
+    
+    function isConversationParticipant(conversation) {
+      return isAuthenticated() && 
+             (request.auth.uid == conversation.participants.tutorId || 
+              request.auth.uid == conversation.participants.studentId);
+    }
+    
+    // ============================================================================
+    // USERS COLLECTION
+    // ============================================================================
+    match /users/{userId} {
+      // Anyone authenticated can read user profiles (for tutor discovery)
+      allow read: if isAuthenticated();
+      
+      // Users can only write to their own profile
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false; // Prevent deletion
+    }
+    
+    // ============================================================================
+    // SESSIONS COLLECTION (Bookings)
+    // ============================================================================
+    match /sessions/{sessionId} {
+      // Both student and tutor can read their sessions
+      allow read: if isAuthenticated() && 
+                     (request.auth.uid == resource.data.studentId || 
+                      request.auth.uid == resource.data.tutorId);
+      
+      // Students can create sessions
+      allow create: if isAuthenticated() && 
+                       request.auth.uid == request.resource.data.studentId;
+      
+      // Both parties can update (tutor confirms, student cancels, etc.)
+      allow update: if isAuthenticated() && 
+                       (request.auth.uid == resource.data.studentId || 
+                        request.auth.uid == resource.data.tutorId);
+      
+      // No deletion, only status updates
+      allow delete: if false;
+    }
+    
+    // ============================================================================
+    // CONVERSATIONS COLLECTION (Messaging)
+    // ============================================================================
+    match /conversations/{conversationId} {
+      // Both participants can read
+      allow read: if isConversationParticipant(resource.data);
+      
+      // Both participants can create/update
+      allow create, update: if isAuthenticated() && 
+                               (request.auth.uid == request.resource.data.participants.tutorId || 
+                                request.auth.uid == request.resource.data.participants.studentId);
+      
+      // Messages subcollection
+      match /messages/{messageId} {
+        // Both participants can read messages
+        allow read: if isAuthenticated() && 
+                       (request.auth.uid == get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants.tutorId || 
+                        request.auth.uid == get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants.studentId);
+        
+        // Both participants can send messages
+        allow create: if isAuthenticated() && 
+                         request.auth.uid == request.resource.data.senderId;
+        
+        // Sender can update their own messages (mark as read, edit)
+        allow update: if isAuthenticated() && 
+                         request.auth.uid == resource.data.senderId;
+      }
+    }
+    
+    // ============================================================================
+    // REVIEWS COLLECTION
+    // ============================================================================
+    match /reviews/{reviewId} {
+      // Everyone can read reviews (public)
+      allow read: if true;
+      
+      // Students can create reviews for completed sessions
+      allow create: if isAuthenticated() && 
+                       request.auth.uid == request.resource.data.studentId &&
+                       request.resource.data.wasVerifiedSession == true;
+      
+      // Students can update their own reviews
+      allow update: if isAuthenticated() && 
+                       request.auth.uid == resource.data.studentId;
+      
+      // No deletion of reviews
+      allow delete: if false;
+    }
+    
+    // ============================================================================
+    // PAYOUTS COLLECTION
+    // ============================================================================
+    match /payouts/{payoutId} {
+      // Only the tutor can read their own payouts
+      allow read: if isAuthenticated() && 
+                     request.auth.uid == resource.data.tutorId;
+      
+      // Only backend (Cloud Functions) can create/update payouts
+      allow create, update, delete: if false;
+    }
+    
+    // ============================================================================
+    // NOTIFICATIONS COLLECTION
+    // ============================================================================
+    match /notifications/{notificationId} {
+      // Users can only read their own notifications
+      allow read: if isAuthenticated() && 
+                     request.auth.uid == resource.data.userId;
+      
+      // Users can update their own notifications (mark as read)
+      allow update: if isAuthenticated() && 
+                       request.auth.uid == resource.data.userId;
+      
+      // Only backend can create notifications
+      allow create, delete: if false;
+    }
+    
+    // ============================================================================
+    // LEGACY COLLECTIONS (Keep existing rules for backward compatibility)
+    // ============================================================================
+    
+    // Tutor applications
+    match /tutor_applications/{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Old tutors collection (can be migrated to users.tutorProfile)
     match /tutors/{document=**} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
     }
     
-    // Allow authenticated users to read and write community data
-    match /community/{document=**} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+    // Community/social feed
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && 
+                               resource.data.userId == request.auth.uid;
     }
     
-    // Allow authenticated users to access their progress
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid;
+      allow delete: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid;
+    }
+    
+    match /likes/{likeId} {
+      allow read: if true;
+      allow create, delete: if isAuthenticated() && 
+                               request.resource.data.userId == request.auth.uid;
+    }
+    
+    // User progress tracking
     match /progress/{userId}/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if isOwner(userId);
     }
   }
 }
