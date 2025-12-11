@@ -12,7 +12,7 @@
     "@capacitor/core": "^7.4.4",
     "@capacitor/status-bar": "^7.0.3",
     "@google/genai": "^1.27.0",
-    "firebase": "^12.5.0",
+    "firebase": "^12.6.0",
     "framer-motion": "^11.3.11",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.553.0",

@@ -16,8 +16,8 @@ const firebaseConfig = {
 // Check if running on localhost (development)
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-// Check if we're in demo mode (missing real Firebase config OR running on localhost for testing)
-const isDemoMode = !(import.meta.env as any).VITE_FIREBASE_API_KEY || isLocalhost;
+// Check if we're in demo mode (missing real Firebase config)
+const isDemoMode = !(import.meta.env as any).VITE_FIREBASE_API_KEY;
 
 if (isDemoMode) {
   console.warn('⚠️ Running in demo mode - Firebase not configured. Set VITE_FIREBASE_* environment variables for production.');
