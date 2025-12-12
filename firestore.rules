@@ -48,14 +48,17 @@ service cloud.firestore {
                      (request.auth.uid == resource.data.studentId || 
                       request.auth.uid == resource.data.tutorId);
       
-      // Students can create sessions
+      // Students can create sessions (payment fields set by backend)
       allow create: if isAuthenticated() && 
                        request.auth.uid == request.resource.data.studentId;
       
       // Both parties can update (tutor confirms, student cancels, etc.)
+      // SECURITY: Prevent modification of payment-related fields
       allow update: if isAuthenticated() && 
                        (request.auth.uid == resource.data.studentId || 
-                        request.auth.uid == resource.data.tutorId);
+                        request.auth.uid == resource.data.tutorId) &&
+                       // Prevent modifying payment fields (only backend can modify these)
+                       !request.resource.data.diff(resource.data).affectedKeys().hasAny(['pricing', 'paymentStatus', 'paymentId', 'payoutId']);
       
       // No deletion, only status updates
       allow delete: if false;
@@ -76,9 +79,10 @@ service cloud.firestore {
       // Messages subcollection
       match /messages/{messageId} {
         // Both participants can read messages
+        // SECURITY FIX: Avoid expensive get() call by validating conversationId format (tutorId_studentId)
         allow read: if isAuthenticated() && 
-                       (request.auth.uid == get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants.tutorId || 
-                        request.auth.uid == get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants.studentId);
+                       (conversationId.split('_')[0] == request.auth.uid || 
+                        conversationId.split('_')[1] == request.auth.uid);
         
         // Both participants can send messages
         allow create: if isAuthenticated() && 
@@ -98,9 +102,12 @@ service cloud.firestore {
       allow read: if true;
       
       // Students can create reviews for completed sessions
+      // SECURITY: Prevent duplicate reviews for the same session
       allow create: if isAuthenticated() && 
                        request.auth.uid == request.resource.data.studentId &&
-                       request.resource.data.wasVerifiedSession == true;
+                       request.resource.data.wasVerifiedSession == true &&
+                       // Ensure no existing review for this session
+                       !exists(/databases/$(database)/documents/reviews/$(request.resource.data.sessionId + '_' + request.auth.uid));
       
       // Students can update their own reviews
       allow update: if isAuthenticated() && 
@@ -131,8 +138,11 @@ service cloud.firestore {
                      request.auth.uid == resource.data.userId;
       
       // Users can update their own notifications (mark as read)
+      // SECURITY: Only allow updating the 'read' field
       allow update: if isAuthenticated() && 
-                       request.auth.uid == resource.data.userId;
+                       request.auth.uid == resource.data.userId &&
+                       // Only allow modifying the 'read' field
+                       request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
       
       // Only backend can create notifications
       allow create, delete: if false;
